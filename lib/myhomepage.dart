@@ -46,7 +46,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _handleMessage(RemoteMessage message) {
+    print('Got a message whilst in the foreground!');
+    print('Message data: ${message.data}');
     if (message != null) {
+      print(message.notification?.body);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(message.notification!.body!)));
       var routeName = message.data['route'];
       Navigator.of(context).pushNamed(routeName);
     } else {
@@ -63,7 +68,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-
     // Run code required to handle interacted messages in an async function
     // as initState() must not be async
     setupInteractedMessage();
